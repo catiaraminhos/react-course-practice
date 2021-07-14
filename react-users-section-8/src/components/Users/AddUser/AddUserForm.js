@@ -54,6 +54,8 @@ const AddUserForm = () => {
         if (isUsernameValid && isAgeValid) {
             console.log('entered username', enteredUsername);
             console.log('entered age', enteredAge);
+            setEnteredUsername('');
+            setEnteredAge('');
         }
     };
 
@@ -65,14 +67,25 @@ const AddUserForm = () => {
                 }`}
             >
                 <label>Username</label>
-                <input type="text" name="username" onChange={usernameChangeHandler} />
+                <input
+                    type="text"
+                    name="username"
+                    value={enteredUsername}
+                    onChange={usernameChangeHandler}
+                />
             </div>
 
             <div
                 className={`${styles.input} ${isAgeInvalid && styles.invalid}`}
             >
                 <label>Age (Years)</label>
-                <input type="number" min="0" name="years" onChange={ageChangeHandler} />
+                <input
+                    type="number"
+                    min="0"
+                    name="years"
+                    value={enteredAge}
+                    onChange={ageChangeHandler}
+                />
             </div>
 
             <Button type="submit">Add User</Button>
