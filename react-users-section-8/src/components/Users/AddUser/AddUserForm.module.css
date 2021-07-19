@@ -17,11 +17,3 @@
     outline: none;
     border-color: #4f005f;
 }
-
-.input.invalid label {
-    color: red;
-}
-
-.input.invalid input {
-    border-color: red;
-}

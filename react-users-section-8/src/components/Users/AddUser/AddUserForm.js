@@ -6,8 +6,7 @@ import styles from './AddUserForm.module.css';
 const AddUserForm = () => {
     const [enteredUsername, setEnteredUsername] = useState('');
     const [enteredAge, setEnteredAge] = useState('');
-    const [isUsernameInvalid, setIsUsernameInvalid] = useState(false);
-    const [isAgeInvalid, setIsAgeInvalid] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const isEnteredUsernameValid = (username) => {
         return username.trim().length > 0;
@@ -18,23 +17,29 @@ const AddUserForm = () => {
         return Number.isInteger(parsedAge) && parsedAge >= 0;
     };
 
-    const usernameChangeHandler = (event) => {
-        const enteredUsername = event.target.value;
+    const getFormErrorMessage = () => {
+        let errorMessage = '';
+        const isUsernameValid = isEnteredUsernameValid(enteredUsername);
+        const isAgeValid = isEnteredAgeValid(enteredAge);
 
-        if (isEnteredUsernameValid(enteredUsername)) {
-            setIsUsernameInvalid(false);
+        if (!isUsernameValid && !isAgeValid) {
+            errorMessage = 'Please enter a valid name and age (non empty values).';
+        } else if (!isAgeValid) {
+            errorMessage = 'Please enter a valid age (> 0).';
+        } else if (!isUsernameValid) {
+            errorMessage = 'Please enter a valid name (non empty value).';
         }
 
+        return errorMessage;
+    };
+
+    const usernameChangeHandler = (event) => {
+        const enteredUsername = event.target.value;
         setEnteredUsername(enteredUsername);
     };
 
     const ageChangeHandler = (event) => {
         const enteredAge = event.target.value;
-
-        if (isEnteredAgeValid(enteredAge)) {
-            setIsAgeInvalid(false);
-        }
-
         setEnteredAge(enteredAge);
     };
 
@@ -43,28 +48,20 @@ const AddUserForm = () => {
         const isUsernameValid = isEnteredUsernameValid(enteredUsername);
         const isAgeValid = isEnteredAgeValid(enteredAge);
 
-        if (!isUsernameValid) {
-            setIsUsernameInvalid(true);
-        }
-
-        if (!isAgeValid) {
-            setIsAgeInvalid(true);
-        }
-
         if (isUsernameValid && isAgeValid) {
             console.log('entered username', enteredUsername);
             console.log('entered age', enteredAge);
             setEnteredUsername('');
             setEnteredAge('');
+        } else {
+            setErrorMessage(getFormErrorMessage());
         }
     };
 
     return (
         <form onSubmit={submitUserHandler} noValidate={true}>
             <div
-                className={`${styles.input} ${
-                    isUsernameInvalid && styles.invalid
-                }`}
+                className={styles.input}
             >
                 <label>Username</label>
                 <input
@@ -76,7 +73,7 @@ const AddUserForm = () => {
             </div>
 
             <div
-                className={`${styles.input} ${isAgeInvalid && styles.invalid}`}
+                className={styles.input}
             >
                 <label>Age (Years)</label>
                 <input
