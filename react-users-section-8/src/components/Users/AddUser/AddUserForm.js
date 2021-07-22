@@ -3,7 +3,7 @@ import Button from '../../UI/Button';
 
 import styles from './AddUserForm.module.css';
 
-const AddUserForm = () => {
+const AddUserForm = (props) => {
     const [enteredUsername, setEnteredUsername] = useState('');
     const [enteredAge, setEnteredAge] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -49,8 +49,12 @@ const AddUserForm = () => {
         const isAgeValid = isEnteredAgeValid(enteredAge);
 
         if (isUsernameValid && isAgeValid) {
-            console.log('entered username', enteredUsername);
-            console.log('entered age', enteredAge);
+            props.onAddUser({
+                id: Math.random(),
+                name: enteredUsername,
+                age: enteredAge
+            });
+
             setEnteredUsername('');
             setEnteredAge('');
         } else {

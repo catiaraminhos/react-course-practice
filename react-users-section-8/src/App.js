@@ -1,25 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AddUser from './components/Users/AddUser/AddUser';
 import UsersList from './components/Users/UsersList/UsersList';
 
 const App = () => {
-    const dummyUsers = [
-        {
-            id: 1,
-            name: 'Cátia',
-            age: 28,
-        },
-        {
-            id: 2,
-            name: 'Miguel',
-            age: 35
-        },
-    ];
+    const [users, setUsers] = useState([]);
 
-    return <div>
-        <AddUser />
-        <UsersList users={dummyUsers} />
-    </div>;
+    const addUserHandler = (user) => {
+        setUsers((previousUsers) => previousUsers.concat(user));
+    };
+
+    return (
+        <div>
+            <AddUser onAddUser={addUserHandler} />
+            <UsersList users={users} />
+        </div>
+    );
 };
 
 export default App;
