@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Button from '../../UI/Button';
+import ErrorModal from '../../UI/ErrorModal';
 
 import styles from './AddUserForm.module.css';
 
@@ -23,7 +24,8 @@ const AddUserForm = (props) => {
         const isAgeValid = isEnteredAgeValid(enteredAge);
 
         if (!isUsernameValid && !isAgeValid) {
-            errorMessage = 'Please enter a valid name and age (non empty values).';
+            errorMessage =
+                'Please enter a valid name and age (non empty values).';
         } else if (!isAgeValid) {
             errorMessage = 'Please enter a valid age (> 0).';
         } else if (!isUsernameValid) {
@@ -52,7 +54,7 @@ const AddUserForm = (props) => {
             props.onAddUser({
                 id: Math.random(),
                 name: enteredUsername,
-                age: enteredAge
+                age: enteredAge,
             });
 
             setEnteredUsername('');
@@ -63,34 +65,32 @@ const AddUserForm = (props) => {
     };
 
     return (
-        <form onSubmit={submitUserHandler} noValidate={true}>
-            <div
-                className={styles.input}
-            >
-                <label>Username</label>
-                <input
-                    type="text"
-                    name="username"
-                    value={enteredUsername}
-                    onChange={usernameChangeHandler}
-                />
-            </div>
+        <div>
+            <form onSubmit={submitUserHandler} noValidate={true}>
+                <div className={styles.input}>
+                    <label>Username</label>
+                    <input
+                        type="text"
+                        name="username"
+                        value={enteredUsername}
+                        onChange={usernameChangeHandler}
+                    />
+                </div>
 
-            <div
-                className={styles.input}
-            >
-                <label>Age (Years)</label>
-                <input
-                    type="number"
-                    min="0"
-                    name="years"
-                    value={enteredAge}
-                    onChange={ageChangeHandler}
-                />
-            </div>
+                <div className={styles.input}>
+                    <label>Age (Years)</label>
+                    <input
+                        type="number"
+                        min="0"
+                        name="years"
+                        value={enteredAge}
+                        onChange={ageChangeHandler}
+                    />
+                </div>
 
-            <Button type="submit">Add User</Button>
-        </form>
+                <Button type="submit">Add User</Button>
+            </form>
+        </div>
     );
 };
 
