@@ -74,9 +74,10 @@ const AddUserForm = (props) => {
         <div>
             <form onSubmit={submitUserHandler} noValidate={true}>
                 <div className={styles.input}>
-                    <label>Username</label>
+                    <label htmlFor="username">Username</label>
                     <input
                         type="text"
+                        id="username"
                         name="username"
                         value={enteredUsername}
                         onChange={usernameChangeHandler}
@@ -84,11 +85,12 @@ const AddUserForm = (props) => {
                 </div>
 
                 <div className={styles.input}>
-                    <label>Age (Years)</label>
+                    <label htmlFor="age">Age (Years)</label>
                     <input
                         type="number"
                         min="0"
-                        name="years"
+                        id="age"
+                        name="age"
                         value={enteredAge}
                         onChange={ageChangeHandler}
                     />
