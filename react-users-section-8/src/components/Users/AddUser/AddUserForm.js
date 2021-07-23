@@ -8,6 +8,7 @@ const AddUserForm = (props) => {
     const [enteredUsername, setEnteredUsername] = useState('');
     const [enteredAge, setEnteredAge] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [displayError, setDisplayError] = useState(false);
 
     const isEnteredUsernameValid = (username) => {
         return username.trim().length > 0;
@@ -61,7 +62,12 @@ const AddUserForm = (props) => {
             setEnteredAge('');
         } else {
             setErrorMessage(getFormErrorMessage());
+            setDisplayError(true);
         }
+    };
+
+    const errorModalOkayClickHandler = () => {
+        setDisplayError(false);
     };
 
     return (
@@ -90,6 +96,14 @@ const AddUserForm = (props) => {
 
                 <Button type="submit">Add User</Button>
             </form>
+
+            {displayError && (
+                <ErrorModal
+                    title="Invalid Input"
+                    content={errorMessage}
+                    onOkayClick={errorModalOkayClickHandler}
+                />
+            )}
         </div>
     );
 };
