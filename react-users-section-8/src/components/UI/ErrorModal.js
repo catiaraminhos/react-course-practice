@@ -8,17 +8,19 @@ import styles from './ErrorModal.module.css';
 const ErrorModal = (props) => {
     return (
         <div>
-            <div className={styles.backdrop}></div>
+            <div className={styles.backdrop} onClick={props.onConfirm} />
             <Card className={styles.modal}>
-                <div className={styles.header}>
+                <header className={styles.header}>
                     <h2>{props.title}</h2>
+                </header>
+                <div className={styles.content}>
+                    <p>{props.content}</p>
                 </div>
-                <div className={styles.content}>{props.content}</div>
-                <div className={styles.actions}>
-                    <Button type="button" onClick={props.onOkayClick}>
+                <footer className={styles.actions}>
+                    <Button type="button" onClick={props.onConfirm}>
                         Okay
                     </Button>
-                </div>
+                </footer>
             </Card>
         </div>
     );

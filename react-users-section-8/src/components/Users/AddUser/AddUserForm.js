@@ -7,8 +7,7 @@ import styles from './AddUserForm.module.css';
 const AddUserForm = (props) => {
     const [enteredUsername, setEnteredUsername] = useState('');
     const [enteredAge, setEnteredAge] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [displayError, setDisplayError] = useState(false);
+    const [error, setError] = useState('');
 
     const isEnteredUsernameValid = (username) => {
         return username.trim().length > 0;
@@ -19,21 +18,29 @@ const AddUserForm = (props) => {
         return Number.isInteger(parsedAge) && parsedAge >= 0;
     };
 
-    const getFormErrorMessage = () => {
-        let errorMessage = '';
+    const getFormError = () => {
+        let error = null;
         const isUsernameValid = isEnteredUsernameValid(enteredUsername);
         const isAgeValid = isEnteredAgeValid(enteredAge);
 
         if (!isUsernameValid && !isAgeValid) {
-            errorMessage =
-                'Please enter a valid name and age (non empty values).';
+            error = {
+                title: 'Invalid input',
+                content: 'Please enter a valid name and age (non empty values).'
+            };
         } else if (!isAgeValid) {
-            errorMessage = 'Please enter a valid age (> 0).';
+            error = {
+                title: 'Invalid age',
+                content: 'Please enter a valid age (> 0).'
+            };
         } else if (!isUsernameValid) {
-            errorMessage = 'Please enter a valid name (non empty value).';
+            error = {
+                title: 'Invalid input',
+                content: 'Please enter a valid name (non empty value).'
+            };
         }
 
-        return errorMessage;
+        return error;
     };
 
     const usernameChangeHandler = (event) => {
@@ -61,13 +68,12 @@ const AddUserForm = (props) => {
             setEnteredUsername('');
             setEnteredAge('');
         } else {
-            setErrorMessage(getFormErrorMessage());
-            setDisplayError(true);
+            setError(getFormError());
         }
     };
 
-    const errorModalOkayClickHandler = () => {
-        setDisplayError(false);
+    const errorModalConfirmClickHandler = () => {
+        setError(null);
     };
 
     return (
@@ -99,11 +105,11 @@ const AddUserForm = (props) => {
                 <Button type="submit">Add User</Button>
             </form>
 
-            {displayError && (
+            {error && (
                 <ErrorModal
-                    title="Invalid Input"
-                    content={errorMessage}
-                    onOkayClick={errorModalOkayClickHandler}
+                    title={error.title}
+                    content={error.content}
+                    onConfirm={errorModalConfirmClickHandler}
                 />
             )}
         </div>
