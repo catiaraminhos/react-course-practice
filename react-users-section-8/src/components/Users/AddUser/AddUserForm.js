@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../../UI/Button';
 import ErrorModal from '../../UI/ErrorModal';
+import Wrapper from '../../Helpers/Wrapper';
 
 import styles from './AddUserForm.module.css';
 
@@ -77,7 +78,7 @@ const AddUserForm = (props) => {
     };
 
     return (
-        <div>
+        <Wrapper>
             <form onSubmit={submitUserHandler} noValidate={true}>
                 <div className={styles.input}>
                     <label htmlFor="username">Username</label>
@@ -112,7 +113,7 @@ const AddUserForm = (props) => {
                     onConfirm={errorModalConfirmClickHandler}
                 />
             )}
-        </div>
+        </Wrapper>
     );
 };
 
