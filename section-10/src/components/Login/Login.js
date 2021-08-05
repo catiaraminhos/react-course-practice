@@ -86,7 +86,7 @@ const Login = () => {
                     id="email"
                     label="E-mail"
                     value={emailState.value}
-                    isValid={emailState.isValid}
+                    isValid={emailIsValid}
                     onChange={emailChangeHandler}
                     onBlur={validateEmailHandler}
                 />
@@ -96,7 +96,7 @@ const Login = () => {
                     id="password"
                     label="Password"
                     value={passwordState.value}
-                    isValid={passwordState.isValid}
+                    isValid={passwordIsValid}
                     onChange={passwordChangeHandler}
                     onBlur={validatePasswordHandler}
                 />
