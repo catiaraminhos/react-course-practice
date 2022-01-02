@@ -1,20 +1,20 @@
-import React from "react";
+import React from 'react';
 
-import Card from "../UI/Card";
+import Modal from '../UI/Modal';
 
-import styles from "./Cart.module.css";
+import styles from './Cart.module.css';
 
 const Cart = (props) => {
   const cartItems = (
-    <ul className={styles["cart-items"]}>
-      {[{ id: "c1", name: "Sushi", amount: 2, price: 12.99 }].map((item) => (
+    <ul className={styles['cart-items']}>
+      {[{ id: 'c1', name: 'Sushi', amount: 2, price: 12.99 }].map((item) => (
         <li>{item.name}</li>
       ))}
     </ul>
   );
 
   return (
-    <Card>
+    <Modal>
       {cartItems}
 
       <div className={styles.total}>
@@ -26,11 +26,11 @@ const Cart = (props) => {
         <button type="button" className={styles.button}>
           Close
         </button>
-        <button type="button" className={styles["button--alt"]}>
+        <button type="button" className={styles['button--alt']}>
           Order
         </button>
       </div>
-    </Card>
+    </Modal>
   );
 };
 
