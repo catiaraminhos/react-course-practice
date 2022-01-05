@@ -5,21 +5,25 @@ import Meals from './components/Meals/Meals';
 import Cart from './components/Cart/Cart';
 
 const App = () => {
-    const [isCartDisplayed, setIsCartDisplayed] = useState(false);
+  const [isCartDisplayed, setIsCartDisplayed] = useState(false);
 
-    const onCartButtonClickHandler = () => {
-        setIsCartDisplayed(true);
-    };
+  const showCartHandler = () => {
+    setIsCartDisplayed(true);
+  };
 
-    return (
-        <Fragment>
-            {isCartDisplayed && <Cart />}
-            <Header onCartButtonClick={onCartButtonClickHandler} />
-            <main>
-                <Meals />
-            </main>
-        </Fragment>
-    );
+  const hideCartHandler = () => {
+    setIsCartDisplayed(false);
+  };
+
+  return (
+    <Fragment>
+      {isCartDisplayed && <Cart onClose={hideCartHandler} />}
+      <Header onCartButtonClick={showCartHandler} />
+      <main>
+        <Meals />
+      </main>
+    </Fragment>
+  );
 };
 
 export default App;
