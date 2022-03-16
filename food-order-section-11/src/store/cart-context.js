@@ -27,7 +27,7 @@ const cartReducer = (state, action) => {
       updatedItems = state.items.map((item) => {
         return {
           ...item,
-          amount: item.amount + action.item.amount
+          amount: item.amount + (item.id === action.item.id ? action.item.amount : 0)
         };
       });
     }
@@ -37,9 +37,25 @@ const cartReducer = (state, action) => {
 
   if (action.type === 'REMOVE') {
     const itemToRemove = state.items.find((item) => item.id === action.id);
-    const updatedItems = state.items.filter((item) => item.id !== action.id);
-    const updatedTotalAmount =
-      state.totalAmount - itemToRemove.price * itemToRemove.amount;
+    
+    let updatedItems = state.items;
+    let updatedTotalAmount = state.totalAmount;
+
+    if (itemToRemove) {
+      updatedTotalAmount =
+        state.totalAmount - itemToRemove.price * 1;
+
+      if (itemToRemove.amount === 1) {
+        updatedItems = state.items.filter((item) => item.id !== action.id);
+      } else {
+        updatedItems = state.items.map((item) => {
+          return {
+            ...item,
+            amount: item.amount - (item.id === action.id ? 1 : 0)
+          };
+        });
+      }
+    }
 
     return { items: updatedItems, totalAmount: updatedTotalAmount };
   }
