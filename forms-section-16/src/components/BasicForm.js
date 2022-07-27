@@ -86,7 +86,7 @@ const BasicForm = (props) => {
           )}
         </div>
       </div>
-      <div className="form-control">
+      <div className={emailInputClasses}>
         <label htmlFor="name">E-Mail Address</label>
         <input
           type="text"
