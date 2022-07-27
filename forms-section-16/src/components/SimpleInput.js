@@ -28,7 +28,7 @@ const SimpleInput = (props) => {
   const formSubmissionHandler = (event) => {
     event.preventDefault();
 
-    if(nameInputHasError || emailInputHasError) {
+    if (nameInputHasError || emailInputHasError) {
       return;
     }
 
@@ -67,7 +67,10 @@ const SimpleInput = (props) => {
           onBlur={emailInputBlurHandler}
         />
         {emailInputHasError && (
-          <p className="error-text">Email must not be empty and must have the right format. For example, test@example.com .</p>
+          <p className="error-text">
+            Email must not be empty and must have the right format. For example,
+            test@example.com .
+          </p>
         )}
       </div>
 
