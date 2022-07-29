@@ -1,7 +1,12 @@
 import useInput from '../hooks/use-input';
 
+const validateName = (nameValue) => nameValue.trim() !== '';
+
+// eslint-disable-next-line no-useless-escape
+const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const validateEmail = (emailValue) => emailFormat.test(emailValue);
+
 const SimpleInput = (props) => {
-  const validateName = (nameValue) => nameValue.trim() !== '';
   const {
     value: enteredName,
     isValid: enteredNameIsValid,
@@ -11,9 +16,6 @@ const SimpleInput = (props) => {
     reset: resetNameInput
   } = useInput(validateName);
 
-  // eslint-disable-next-line no-useless-escape
-  const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const validateEmail = (emailValue) => emailFormat.test(emailValue);
   const {
     value: enteredEmail,
     isValid: enteredEmailIsValid,
@@ -28,9 +30,12 @@ const SimpleInput = (props) => {
   const formSubmissionHandler = (event) => {
     event.preventDefault();
 
-    if (nameInputHasError || emailInputHasError) {
+    if (!formIsValid) {
       return;
     }
+
+    console.log('Submitted!');
+    console.log(enteredName, enteredEmail);
 
     resetNameInput();
     resetEmailInput();
