@@ -1,7 +1,12 @@
 import useInput from '../hooks/use-input';
 
+const isNotEmpty = (firstNameValue) => firstNameValue.trim() !== '';
+
+// eslint-disable-next-line no-useless-escape
+const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const validateEmail = (emailValue) => emailFormat.test(emailValue);
+
 const BasicForm = (props) => {
-  const validateFirsName = (firstNameValue) => firstNameValue.trim() !== '';
   const {
     value: enteredFirstName,
     isValid: enteredFirstNameIsValid,
@@ -9,9 +14,7 @@ const BasicForm = (props) => {
     valueChangeHandler: firstNameInputChangeHandler,
     inputBlurHandler: firstNameInputBlurHandler,
     reset: resetFirstNameInput
-  } = useInput(validateFirsName);
-
-  const validateLastName = (lasNameValue) => lasNameValue.trim() !== '';
+  } = useInput(isNotEmpty);
 
   const {
     value: enteredLastName,
@@ -20,11 +23,8 @@ const BasicForm = (props) => {
     valueChangeHandler: lastNameInputChangeHandler,
     inputBlurHandler: lastNameInputBlurHandler,
     reset: resetLastNameInput
-  } = useInput(validateLastName);
+  } = useInput(isNotEmpty);
 
-  // eslint-disable-next-line no-useless-escape
-  const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const validateEmail = (emailValue) => emailFormat.test(emailValue);
   const {
     value: enteredEmail,
     isValid: enteredEmailIsValid,
@@ -40,9 +40,12 @@ const BasicForm = (props) => {
   const formSubmissionHandler = (event) => {
     event.preventDefault();
 
-    if (firstNameInputHasError || lastNameInputHasError || emailInputHasError) {
+    if (!formIsValid) {
       return;
     }
+
+    console.log('Submitted!');
+    console.log(enteredFirstName, enteredLastName, enteredEmail);
 
     resetFirstNameInput();
     resetLastNameInput();
