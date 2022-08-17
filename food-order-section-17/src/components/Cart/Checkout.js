@@ -45,8 +45,12 @@ const Checkout = (props) => {
       return;
     }
 
-    console.log('Confirming...');
-    console.log(name, street, postalCode, city);
+    props.onConfirm({
+      name,
+      street,
+      postalCode,
+      city
+    });
   };
 
   const nameControlClasses = `${classes.control} ${
@@ -94,7 +98,9 @@ const Checkout = (props) => {
         <button type="button" onClick={props.onCancel}>
           Cancel
         </button>
-        <button className={classes.submit}>Confirm</button>
+        <button className={classes.submit} disabled={props.loading}>
+          {props.loading ? 'Sending...' : 'Confirm'}
+        </button>
       </div>
     </form>
   );

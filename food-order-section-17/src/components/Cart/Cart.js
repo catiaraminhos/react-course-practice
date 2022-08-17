@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 
+import useHttp from '../../hooks/use-http';
 import Modal from '../UI/Modal';
 import CartItem from './CartItem';
 import classes from './Cart.module.css';
@@ -9,6 +10,7 @@ import Checkout from './Checkout';
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
   const [isCheckoutShown, setIsCheckoutShown] = useState(false);
+  const { isLoading, error, sendRequest: addOrder } = useHttp();
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
@@ -23,6 +25,29 @@ const Cart = (props) => {
 
   const orderClickHandler = () => {
     setIsCheckoutShown(true);
+  };
+
+  const submitOrderHandler = async (checkoutInfo) => {
+    const orderToSend = {
+      items: cartCtx.items,
+      checkoutInfo
+    };
+
+    const afterAddOrderHandler = () => {
+      props.onClose();
+    };
+
+    addOrder(
+      {
+        url: 'https://react-course-http-4ee76-default-rtdb.europe-west1.firebasedatabase.app/orders.json',
+        method: 'POST',
+        body: orderToSend,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      },
+      afterAddOrderHandler
+    );
   };
 
   const cartItems = (
@@ -60,7 +85,14 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckoutShown && <Checkout onCancel={props.onClose} />}
+      {error && <p>{error}</p>}
+      {isCheckoutShown && (
+        <Checkout
+          loading={isLoading}
+          onCancel={props.onClose}
+          onConfirm={submitOrderHandler}
+        />
+      )}
       {!isCheckoutShown && modalActions}
     </Modal>
   );
