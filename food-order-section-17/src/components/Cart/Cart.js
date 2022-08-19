@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import useHttp from '../../hooks/use-http';
 import Modal from '../UI/Modal';
@@ -9,8 +9,9 @@ import Checkout from './Checkout';
 
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
-  const [isCheckoutShown, setIsCheckoutShown] = useState(false);
   const { isLoading, error, sendRequest: addOrder } = useHttp();
+  const [isCheckoutShown, setIsCheckoutShown] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
@@ -34,7 +35,8 @@ const Cart = (props) => {
     };
 
     const afterAddOrderHandler = () => {
-      props.onClose();
+      setIsSubmitted(true);
+      cartCtx.clearCart();
     };
 
     addOrder(
@@ -78,8 +80,8 @@ const Cart = (props) => {
     </div>
   );
 
-  return (
-    <Modal onClose={props.onClose}>
+  const cartModalContent = (
+    <React.Fragment>
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
@@ -94,6 +96,24 @@ const Cart = (props) => {
         />
       )}
       {!isCheckoutShown && modalActions}
+    </React.Fragment>
+  );
+
+  const didSubmitModalContent = (
+    <React.Fragment>
+      <p>Successfully sent the order!</p>
+      <div className={classes.actions}>
+        <button className={classes.button} onClick={props.onClose}>
+          Close
+        </button>
+      </div>
+    </React.Fragment>
+  );
+
+  return (
+    <Modal onClose={props.onClose}>
+      {!isSubmitted && cartModalContent}
+      {isSubmitted && didSubmitModalContent}
     </Modal>
   );
 };
