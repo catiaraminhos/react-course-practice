@@ -16,6 +16,12 @@ const CartItem = (props) => {
     }));
   };
 
+  const decreaseItemQuantityHandler = () => {
+    dispatch(cartActions.removeItem({
+      itemTitle: title
+    }));
+  };
+
   return (
     <li className={classes.item}>
       <header>
@@ -30,7 +36,7 @@ const CartItem = (props) => {
           x <span>{quantity}</span>
         </div>
         <div className={classes.actions}>
-          <button>-</button>
+          <button onClick={decreaseItemQuantityHandler}>-</button>
           <button onClick={increaseItemQuantityHandler}>+</button>
         </div>
       </div>
