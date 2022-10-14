@@ -1,15 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { cartActions } from '../../store/cart';
+import { uiActions } from '../../store/ui';
 
 import classes from './CartButton.module.css';
 
 const CartButton = (props) => {
   const dispatch = useDispatch();
-  const nrItems = useSelector((state) => state.items.length);
+  const nrItems = useSelector((state) => state.cart.items.length);
 
   const toggleCartHandler = () => {
-    dispatch(cartActions.toggleCart());
+    dispatch(uiActions.toggleCart());
   };
 
   return (
