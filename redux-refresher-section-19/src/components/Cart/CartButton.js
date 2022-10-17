@@ -6,7 +6,7 @@ import classes from './CartButton.module.css';
 
 const CartButton = (props) => {
   const dispatch = useDispatch();
-  const nrItems = useSelector((state) => state.cart.items.length);
+  const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
   const toggleCartHandler = () => {
     dispatch(uiActions.toggleCart());
@@ -15,7 +15,7 @@ const CartButton = (props) => {
   return (
     <button onClick={toggleCartHandler} className={classes.button}>
       <span>My Cart</span>
-      <span className={classes.badge}>{nrItems}</span>
+      <span className={classes.badge}>{totalQuantity}</span>
     </button>
   );
 };
