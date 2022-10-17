@@ -10,35 +10,37 @@ const cartSlice = createSlice({
   initialState: initialCartState,
   reducers: {
     addItem: (state, action) => {
-      const itemToIncreaseQuantity = state.items.find(
-        (item) => item.title === action.payload.item.title
+      const newItem = action.payload.item;
+      const existingItem = state.items.find(
+        (item) => item.id === newItem.id
       );
 
-      if (itemToIncreaseQuantity) {
-        itemToIncreaseQuantity.quantity++;
-        itemToIncreaseQuantity.total = itemToIncreaseQuantity.quantity * itemToIncreaseQuantity.price;
+      if (existingItem) {
+        existingItem.quantity++;
+        existingItem.total = existingItem.quantity * existingItem.price;
       } else {
         state.items.push({
-          title: action.payload.item.title,
+          id: newItem.id,
+          title: newItem.title,
           quantity: 1,
-          price: action.payload.item.price,
-          total: action.payload.item.price
+          price: newItem.price,
+          total: newItem.price
         });
       }
 
       state.totalQuantity++;
     },
     removeItem: (state, action) => {
-      const itemToDecreaseQuantity = state.items.find(
-        (item) => item.title === action.payload.itemTitle
+      const existingItem = state.items.find(
+        (item) => item.id === action.payload.itemId
       );
 
-      if (itemToDecreaseQuantity.quantity === 1) {
-        const itemIndex = state.items.indexOf(itemToDecreaseQuantity);
+      if (existingItem.quantity === 1) {
+        const itemIndex = state.items.indexOf(existingItem);
         state.items.splice(itemIndex, 1);
       } else {
-        itemToDecreaseQuantity.quantity--;
-        itemToDecreaseQuantity.total = itemToDecreaseQuantity.quantity * itemToDecreaseQuantity.price;
+        existingItem.quantity--;
+        existingItem.total = existingItem.quantity * existingItem.price;
       }
 
       state.totalQuantity--;
