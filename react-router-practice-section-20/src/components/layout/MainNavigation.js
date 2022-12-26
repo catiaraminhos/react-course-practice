@@ -13,7 +13,7 @@ const MainNavigation = () => {
               All Quotes
             </NavLink>
           </li>
-          <li>Add a Quote</li>
+            <li>Add a Quote</li>
         </ul>
       </nav>
     </header>
