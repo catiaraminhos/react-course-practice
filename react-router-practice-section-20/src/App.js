@@ -5,6 +5,7 @@ import MainNavigation from './components/layout/MainNavigation';
 
 import AllQuotes from './pages/AllQuotes';
 import AddQuote from './pages/AddQuote';
+import QuoteDetail from './pages/QuoteDetail';
 
 function App() {
   return (
@@ -16,8 +17,11 @@ function App() {
           <Route exact path="/">
             <Redirect to="/quotes" />
           </Route>
-          <Route path="/quotes">
+          <Route exact path="/quotes">
             <AllQuotes />
+          </Route>
+          <Route path="/quotes/:quoteId">
+            <QuoteDetail />
           </Route>
           <Route path="/add-quote">
             <AddQuote />
