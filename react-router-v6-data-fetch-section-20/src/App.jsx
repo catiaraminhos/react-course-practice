@@ -11,14 +11,19 @@ import NewPostPage from './pages/NewPost';
 import PostDetailPage, { loader as postDetailLoader } from './pages/PostDetail';
 import RootLayout from './components/RootLayout';
 import WelcomePage from './pages/Welcome';
+import ErrorPage from './pages/Error';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
+    <Route path="/" element={<RootLayout />} errorElement={<ErrorPage />}>
       <Route index element={<WelcomePage />} />
       <Route path="/blog" element={<BlogLayout />}>
         <Route index element={<BlogPostsPage />} loader={blogPostsLoader} />
-        <Route path=":id" element={<PostDetailPage />} loader={postDetailLoader} />
+        <Route
+          path=":id"
+          element={<PostDetailPage />}
+          loader={postDetailLoader}
+        />
       </Route>
       <Route path="/blog/new" element={<NewPostPage />} />
     </Route>
