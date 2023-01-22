@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 import classes from './MainNavigation.module.css';
 
-const setActiveClassName = ({ isActive }) =>
+const getActiveClassName = ({ isActive }) =>
   isActive ? classes.active : undefined;
 
 function MainNavigation() {
@@ -11,12 +11,12 @@ function MainNavigation() {
       <nav>
         <ul className={classes.list}>
           <li>
-            <NavLink to="/" className={setActiveClassName}>
+            <NavLink to="/" className={getActiveClassName}>
               Home
             </NavLink>
           </li>
           <li>
-            <NavLink to="/events" className={setActiveClassName}>
+            <NavLink to="/events" className={getActiveClassName}>
               Events
             </NavLink>
           </li>
