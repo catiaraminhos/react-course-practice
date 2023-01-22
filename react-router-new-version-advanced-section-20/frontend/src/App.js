@@ -5,6 +5,7 @@ import EventDetailPage from './pages/EventDetail';
 import EventsPage from './pages/Events';
 import HomePage from './pages/Home';
 import NewEventPage from './pages/NewEvent';
+import RootLayout from './pages/Root';
 
 // Challenge / Exercise
 
@@ -29,11 +30,17 @@ import NewEventPage from './pages/NewEvent';
 // BONUS: Add another (nested) layout route that adds the <EventNavigation> component above all /events... page components
 
 const router = createBrowserRouter([
-  { path: '/', element: <HomePage /> },
-  { path: '/events', element: <EventsPage /> },
-  { path: '/events/:id', element: <EventDetailPage /> },
-  { path: '/events/new', element: <NewEventPage /> },
-  { path: '/events/:id/edit', element: <EditEventPage /> }
+  {
+    path: '/',
+    element: <RootLayout />,
+    children: [
+      { index: true, element: <HomePage /> },
+      { path: 'events', element: <EventsPage /> },
+      { path: 'events/:id', element: <EventDetailPage /> },
+      { path: 'events/new', element: <NewEventPage /> },
+      { path: 'events/:id/edit', element: <EditEventPage /> }
+    ]
+  }
 ]);
 
 function App() {
