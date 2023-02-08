@@ -1,10 +1,11 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
+import AuthenticationPage from './pages/Authentication';
 import EditEventPage from './pages/EditEvent';
 import ErrorPage from './pages/Error';
 import EventDetailPage, {
   loader as eventDetailLoader,
-  action as deleteEventAction,
+  action as deleteEventAction
 } from './pages/EventDetail';
 import EventsPage, { loader as eventsLoader } from './pages/Events';
 import EventsRootLayout from './pages/EventsRoot';
@@ -22,13 +23,17 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       {
+        path: 'auth',
+        element: <AuthenticationPage />
+      },
+      {
         path: 'events',
         element: <EventsRootLayout />,
         children: [
           {
             index: true,
             element: <EventsPage />,
-            loader: eventsLoader,
+            loader: eventsLoader
           },
           {
             path: ':eventId',
@@ -38,29 +43,29 @@ const router = createBrowserRouter([
               {
                 index: true,
                 element: <EventDetailPage />,
-                action: deleteEventAction,
+                action: deleteEventAction
               },
               {
                 path: 'edit',
                 element: <EditEventPage />,
-                action: manipulateEventAction,
-              },
-            ],
+                action: manipulateEventAction
+              }
+            ]
           },
           {
             path: 'new',
             element: <NewEventPage />,
-            action: manipulateEventAction,
-          },
-        ],
+            action: manipulateEventAction
+          }
+        ]
       },
       {
         path: 'newsletter',
         element: <NewsletterPage />,
-        action: newsletterAction,
-      },
-    ],
-  },
+        action: newsletterAction
+      }
+    ]
+  }
 ]);
 
 function App() {
