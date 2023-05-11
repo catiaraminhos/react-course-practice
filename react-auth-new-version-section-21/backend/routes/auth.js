@@ -27,7 +27,7 @@ router.post('/signup', async (req, res, next) => {
   if (Object.keys(errors).length > 0) {
     return res.status(422).json({
       message: 'User signup failed due to validation errors.',
-      errors,
+      errors
     });
   }
 
@@ -57,7 +57,7 @@ router.post('/login', async (req, res) => {
   if (!pwIsValid) {
     return res.status(422).json({
       message: 'Invalid credentials.',
-      errors: { credentials: 'Invalid email or password entered.' },
+      errors: { credentials: 'Invalid email or password entered.' }
     });
   }
 
