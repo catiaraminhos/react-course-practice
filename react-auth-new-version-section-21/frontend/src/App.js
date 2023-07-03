@@ -17,7 +17,7 @@ import RootLayout from './pages/Root';
 import { action as manipulateEventAction } from './components/EventForm';
 import NewsletterPage, { action as newsletterAction } from './pages/Newsletter';
 import { action as logoutAction } from './pages/Logout';
-import { tokenLoader } from './utils/auth';
+import { checkAuthLoader, tokenLoader } from './utils/auth';
 
 const router = createBrowserRouter([
   {
@@ -55,14 +55,16 @@ const router = createBrowserRouter([
               {
                 path: 'edit',
                 element: <EditEventPage />,
-                action: manipulateEventAction
+                action: manipulateEventAction,
+                loader: checkAuthLoader
               }
             ]
           },
           {
             path: 'new',
             element: <NewEventPage />,
-            action: manipulateEventAction
+            action: manipulateEventAction,
+            loader: checkAuthLoader
           }
         ]
       },
