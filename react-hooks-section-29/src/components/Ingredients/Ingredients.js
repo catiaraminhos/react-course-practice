@@ -8,13 +8,28 @@ const Ingredients = () => {
   const [ingredients, setIngredients] = useState([]);
 
   const addIngredientHandler = (ingredient) => {
-    setIngredients((previousIngredients) => [
-      ...previousIngredients,
+    fetch(
+      'https://react-hooks-update-e8a96-default-rtdb.europe-west1.firebasedatabase.app/ingredients.json',
       {
-        id: Math.random().toString(),
-        ...ingredient
+        method: 'POST',
+        body: JSON.stringify(ingredient),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-    ]);
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((responseData) => {
+        setIngredients((previousIngredients) => [
+          ...previousIngredients,
+          {
+            id: responseData.name,
+            ...ingredient
+          }
+        ]);
+      });
   };
 
   const removeIngredientHandler = (id) => {
