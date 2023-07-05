@@ -18,6 +18,9 @@ const Ingredients = () => {
   };
 
   const removeIngredientHandler = (id) => {
+    setIngredients((previousIngredients) =>
+      previousIngredients.filter((ingredient) => ingredient.id !== id)
+    );
   };
 
   return (
