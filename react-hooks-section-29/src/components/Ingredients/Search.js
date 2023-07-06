@@ -9,7 +9,7 @@ const Search = React.memo((props) => {
   const filterInputRef = useRef();
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       if (enteredFilter === filterInputRef.current.value) {
         const query =
           enteredFilter.length === 0
@@ -35,6 +35,11 @@ const Search = React.memo((props) => {
           });
       }
     }, 500);
+
+    return () => {
+      // Runs before the next time useEffect will run
+      clearTimeout(timer);
+    };
   }, [enteredFilter, onLoadIngredients, filterInputRef]);
 
   const filterChangeHandler = (event) => {
