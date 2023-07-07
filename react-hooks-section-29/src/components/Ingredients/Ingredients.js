@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useCallback } from 'react';
+import React, { useReducer, useCallback } from 'react';
 
 import ErrorModal from '../UI/ErrorModal';
 import IngredientForm from './IngredientForm';
@@ -20,17 +20,46 @@ const ingredientReducer = (currentIngredients, action) => {
   }
 };
 
+const httpReducer = (currentHttpState, action) => {
+  switch (action.type) {
+    case 'SEND':
+      return {
+        isLoading: true,
+        error: null
+      };
+    case 'RESPONSE':
+      return {
+        ...currentHttpState,
+        isLoading: false
+      };
+    case 'ERROR':
+      return {
+        isLoading: false,
+        error: action.error
+      };
+    case 'CLEAR_ERROR':
+      return {
+        ...currentHttpState,
+        error: null
+      };
+    default:
+      throw new Error('Should not get here!');
+  }
+};
+
 const Ingredients = () => {
   const [ingredients, dispatchIngredients] = useReducer(ingredientReducer, []);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  const [httpState, dispatchHttp] = useReducer(httpReducer, {
+    isLoading: false,
+    error: null
+  });
 
   const filteredIngredientsHandler = useCallback((filteredIngredients) => {
     dispatchIngredients({ type: 'SET', ingredients: filteredIngredients });
   }, []);
 
   const addIngredientHandler = (ingredient) => {
-    setIsLoading(true);
+    dispatchHttp({ type: 'SEND' });
 
     fetch(
       'https://react-hooks-update-e8a96-default-rtdb.europe-west1.firebasedatabase.app/ingredients.json',
@@ -46,7 +75,7 @@ const Ingredients = () => {
         return response.json();
       })
       .then((responseData) => {
-        setIsLoading(false);
+        dispatchHttp({ type: 'RESPONSE' });
         dispatchIngredients({
           type: 'ADD',
           ingredient: {
@@ -58,7 +87,7 @@ const Ingredients = () => {
   };
 
   const removeIngredientHandler = (id) => {
-    setIsLoading(true);
+    dispatchHttp({ type: 'SEND' });
 
     fetch(
       `https://react-hooks-update-e8a96-default-rtdb.europe-west1.firebasedatabase.app/ingredients/${id}.json`,
@@ -70,26 +99,27 @@ const Ingredients = () => {
       }
     )
       .then(() => {
-        setIsLoading(false);
+        dispatchHttp({ type: 'RESPONSE' });
         dispatchIngredients({ type: 'DELETE', id });
       })
       .catch(() => {
-        setIsLoading(false);
-        setError('Something went wrong!');
+        dispatchHttp({ type: 'ERROR', error: 'Something went wrong!' });
       });
   };
 
   const clearError = () => {
-    setError(null);
+    dispatchHttp({ type: 'CLEAR_ERROR' });
   };
 
   return (
     <div className="App">
-      {error && <ErrorModal onClose={clearError}>{error}</ErrorModal>}
+      {httpState.error && (
+        <ErrorModal onClose={clearError}>{httpState.error}</ErrorModal>
+      )}
 
       <IngredientForm
         onAddIngredient={addIngredientHandler}
-        loading={isLoading}
+        loading={httpState.isLoading}
       />
 
       <section>
