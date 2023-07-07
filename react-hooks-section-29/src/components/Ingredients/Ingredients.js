@@ -37,9 +37,19 @@ const Ingredients = () => {
   };
 
   const removeIngredientHandler = (id) => {
-    setIngredients((previousIngredients) =>
-      previousIngredients.filter((ingredient) => ingredient.id !== id)
-    );
+    fetch(
+      `https://react-hooks-update-e8a96-default-rtdb.europe-west1.firebasedatabase.app/ingredients/${id}.json`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    ).then(() => {
+      setIngredients((previousIngredients) =>
+        previousIngredients.filter((ingredient) => ingredient.id !== id)
+      );
+    });
   };
 
   return (
