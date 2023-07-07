@@ -58,7 +58,7 @@ const Ingredients = () => {
     dispatchIngredients({ type: 'SET', ingredients: filteredIngredients });
   }, []);
 
-  const addIngredientHandler = (ingredient) => {
+  const addIngredientHandler = useCallback((ingredient) => {
     dispatchHttp({ type: 'SEND' });
 
     fetch(
@@ -84,9 +84,9 @@ const Ingredients = () => {
           }
         });
       });
-  };
+  }, []);
 
-  const removeIngredientHandler = (id) => {
+  const removeIngredientHandler = useCallback((id) => {
     dispatchHttp({ type: 'SEND' });
 
     fetch(
@@ -105,11 +105,11 @@ const Ingredients = () => {
       .catch(() => {
         dispatchHttp({ type: 'ERROR', error: 'Something went wrong!' });
       });
-  };
+  }, []);
 
-  const clearError = () => {
+  const clearError = useCallback(() => {
     dispatchHttp({ type: 'CLEAR_ERROR' });
-  };
+  }, []);
 
   return (
     <div className="App">
