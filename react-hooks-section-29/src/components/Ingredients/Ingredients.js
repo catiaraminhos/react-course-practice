@@ -6,12 +6,15 @@ import Search from './Search';
 
 const Ingredients = () => {
   const [ingredients, setIngredients] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const filteredIngredientsHandler = useCallback((filteredIngredients) => {
     setIngredients(filteredIngredients);
   }, []);
 
   const addIngredientHandler = (ingredient) => {
+    setIsLoading(true);
+
     fetch(
       'https://react-hooks-update-e8a96-default-rtdb.europe-west1.firebasedatabase.app/ingredients.json',
       {
@@ -26,6 +29,7 @@ const Ingredients = () => {
         return response.json();
       })
       .then((responseData) => {
+        setIsLoading(false);
         setIngredients((previousIngredients) => [
           ...previousIngredients,
           {
@@ -37,6 +41,8 @@ const Ingredients = () => {
   };
 
   const removeIngredientHandler = (id) => {
+    setIsLoading(true);
+
     fetch(
       `https://react-hooks-update-e8a96-default-rtdb.europe-west1.firebasedatabase.app/ingredients/${id}.json`,
       {
@@ -46,6 +52,7 @@ const Ingredients = () => {
         }
       }
     ).then(() => {
+      setIsLoading(false);
       setIngredients((previousIngredients) =>
         previousIngredients.filter((ingredient) => ingredient.id !== id)
       );
@@ -54,7 +61,10 @@ const Ingredients = () => {
 
   return (
     <div className="App">
-      <IngredientForm onAddIngredient={addIngredientHandler} />
+      <IngredientForm
+        onAddIngredient={addIngredientHandler}
+        loading={isLoading}
+      />
 
       <section>
         <Search onLoadIngredients={filteredIngredientsHandler} />
