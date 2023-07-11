@@ -1,8 +1,10 @@
+import styles from './Post.module.css';
+
 const Post = (props) => {
   return (
-    <div>
-      <p>{props.author}</p>
-      <p>{props.text}</p>
+    <div className={styles.post}>
+      <p className={styles.author}>{props.author}</p>
+      <p className={styles.text}>{props.text}</p>
     </div>
   );
 };
