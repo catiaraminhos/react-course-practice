@@ -1,12 +1,12 @@
 import classes from './NewPost.module.css';
 
-function NewPost(props) {
+function NewPost({ onChangeName, onChangeBody }) {
   const changeBodyHandler = (event) => {
-    props.onChangeBody(event.target.value);
+    onChangeBody(event.target.value);
   };
 
   const changeNameHandler = (event) => {
-    props.onChangeName(event.target.value);
+    onChangeName(event.target.value);
   };
 
   return (
