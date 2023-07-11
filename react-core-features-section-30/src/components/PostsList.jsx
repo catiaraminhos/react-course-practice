@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import Modal from './Modal';
 import NewPost from './NewPost';
 import Post from './Post';
 
@@ -19,10 +20,12 @@ const PostsList = () => {
 
   return (
     <>
-      <NewPost
-        onChangeName={changeNameHandler}
-        onChangeBody={changeBodyHandler}
-      />
+      <Modal>
+        <NewPost
+          onChangeName={changeNameHandler}
+          onChangeBody={changeBodyHandler}
+        />
+      </Modal>
 
       <ul className={styles.posts}>
         <Post author={firstPostAuthor} text={firstPostText} />
