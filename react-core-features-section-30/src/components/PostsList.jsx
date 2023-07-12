@@ -6,14 +6,9 @@ import Post from './Post';
 
 import styles from './PostsList.module.css';
 
-const PostsList = () => {
-  const [modalIsVisible, setModalIsVisible] = useState(true);
+const PostsList = ({ isPosting, onStopPosting }) => {
   const [firstPostAuthor, setFirstPostAuthor] = useState('');
   const [firstPostText, setFirstPostText] = useState('');
-
-  const closeModalHandler = () => {
-    setModalIsVisible(false);
-  };
 
   const changeNameHandler = (name) => {
     setFirstPostAuthor(name);
@@ -25,8 +20,8 @@ const PostsList = () => {
 
   return (
     <>
-      {modalIsVisible && (
-        <Modal onClose={closeModalHandler}>
+      {isPosting && (
+        <Modal onClose={onStopPosting}>
           <NewPost
             onChangeName={changeNameHandler}
             onChangeBody={changeBodyHandler}
