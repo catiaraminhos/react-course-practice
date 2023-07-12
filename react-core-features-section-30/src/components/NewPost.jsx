@@ -1,6 +1,6 @@
 import classes from './NewPost.module.css';
 
-function NewPost({ onChangeName, onChangeBody }) {
+function NewPost({ onChangeName, onChangeBody, onCancel }) {
   const changeBodyHandler = (event) => {
     onChangeBody(event.target.value);
   };
@@ -19,6 +19,12 @@ function NewPost({ onChangeName, onChangeBody }) {
       <p>
         <label htmlFor="name">Your name</label>
         <input type="text" id="name" required onChange={changeNameHandler} />
+      </p>
+      <p className={classes.actions}>
+        <button type="button" onClick={onCancel}>
+          Cancel
+        </button>
+        <button>Submit</button>
       </p>
     </form>
   );

@@ -25,6 +25,7 @@ const PostsList = ({ isPosting, onStopPosting }) => {
           <NewPost
             onChangeName={changeNameHandler}
             onChangeBody={changeBodyHandler}
+            onCancel={onStopPosting}
           />
         </Modal>
       )}
