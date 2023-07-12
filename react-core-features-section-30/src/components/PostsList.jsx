@@ -7,8 +7,13 @@ import Post from './Post';
 import styles from './PostsList.module.css';
 
 const PostsList = () => {
+  const [modalIsVisible, setModalIsVisible] = useState(true);
   const [firstPostAuthor, setFirstPostAuthor] = useState('');
   const [firstPostText, setFirstPostText] = useState('');
+
+  const closeModalHandler = () => {
+    setModalIsVisible(false);
+  };
 
   const changeNameHandler = (name) => {
     setFirstPostAuthor(name);
@@ -20,12 +25,14 @@ const PostsList = () => {
 
   return (
     <>
-      <Modal>
-        <NewPost
-          onChangeName={changeNameHandler}
-          onChangeBody={changeBodyHandler}
-        />
-      </Modal>
+      {modalIsVisible && (
+        <Modal onClose={closeModalHandler}>
+          <NewPost
+            onChangeName={changeNameHandler}
+            onChangeBody={changeBodyHandler}
+          />
+        </Modal>
+      )}
 
       <ul className={styles.posts}>
         <Post author={firstPostAuthor} text={firstPostText} />
