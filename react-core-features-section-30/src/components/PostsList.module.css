@@ -9,12 +9,9 @@
   justify-content: center;
 }
 
-.without-posts {
-  text-align: center;
-  color: white;
-}
-
-.loading {
+.without-posts,
+.loading,
+.error {
   text-align: center;
   color: white;
 }
