@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Modal from './Modal';
 import NewPost from './NewPost';
@@ -8,6 +8,16 @@ import styles from './PostsList.module.css';
 
 const PostsList = ({ isPosting, onStopPosting }) => {
   const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch('http://localhost:8080/posts');
+      const responseData = await response.json();
+      setPosts(responseData.posts || []);
+    };
+
+    fetchPosts();
+  }, []);
 
   const newPostHandler = (post) => {
     setPosts((currentPosts) => {
@@ -26,7 +36,7 @@ const PostsList = ({ isPosting, onStopPosting }) => {
       {posts.length > 0 && (
         <ul className={styles.posts}>
           {posts.map((post) => (
-            <Post key={post.text} author={post.author} text={post.text} />
+            <Post key={post.id} author={post.author} text={post.text} />
           ))}
         </ul>
       )}
