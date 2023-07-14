@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import Modal from './Modal';
-import NewPost from './NewPost';
 import Post from './Post';
 
 import styles from './PostsList.module.css';
 
-const PostsList = ({ isPosting, onStopPosting }) => {
+const PostsList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
@@ -47,12 +45,6 @@ const PostsList = ({ isPosting, onStopPosting }) => {
 
   return (
     <>
-      {isPosting && (
-        <Modal onClose={onStopPosting}>
-          <NewPost onCancel={onStopPosting} onNewPost={newPostHandler} />
-        </Modal>
-      )}
-
       {!isLoading && !errorMessage && posts.length > 0 && (
         <ul className={styles.posts}>
           {posts.map((post) => (
