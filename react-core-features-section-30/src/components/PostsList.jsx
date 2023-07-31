@@ -7,18 +7,6 @@ import styles from './PostsList.module.css';
 const PostsList = () => {
   const posts = useLoaderData();
 
-  const newPostHandler = (post) => {
-    fetch('http://localhost:8080/posts', {
-      method: 'POST',
-      body: JSON.stringify(post),
-      headers: { 'Content-Type': 'application/json' }
-    });
-
-    // setPosts((currentPosts) => {
-    //   return [post, ...currentPosts];
-    // });
-  };
-
   return (
     <>
       {posts.length > 0 && (
