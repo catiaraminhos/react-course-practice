@@ -1,5 +1,5 @@
-const DetailsPage = () => {
-  return <h1>The Details Page</h1>;
+const DetailsPage = ({ params }) => {
+  return <h1>The Details Page: {params.newsId}</h1>;
 };
 
 export default DetailsPage;
