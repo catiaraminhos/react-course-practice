@@ -18,8 +18,14 @@ const DUMMY_MEETUPS = [
   }
 ];
 
-const HomePage = () => {
-  return <MeetupList meetups={DUMMY_MEETUPS} />;
+const getMeetups = async () => {
+  return DUMMY_MEETUPS;
+};
+
+const HomePage = async () => {
+  const meetups = await getMeetups();
+
+  return <MeetupList meetups={meetups} />;
 };
 
 export default HomePage;
