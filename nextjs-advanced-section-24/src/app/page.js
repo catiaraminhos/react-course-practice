@@ -1,3 +1,5 @@
+import { getMeetups } from './api/meetups/meetups';
+
 import MeetupList from '@/components/meetups/MeetupList';
 
 const DUMMY_MEETUPS = [
@@ -17,10 +19,6 @@ const DUMMY_MEETUPS = [
     description: 'This is a second meetup!'
   }
 ];
-
-const getMeetups = async () => {
-  return DUMMY_MEETUPS;
-};
 
 const HomePage = async () => {
   const meetups = await getMeetups();
