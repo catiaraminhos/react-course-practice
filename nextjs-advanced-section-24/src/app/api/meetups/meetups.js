@@ -8,7 +8,10 @@ export const getMeetups = async () => {
 
   const meetupsCollection = db.collection('meetups');
 
-  const meetups = await meetupsCollection.find().toArray();
+  const meetups = (await meetupsCollection.find().toArray()).map((meetup) => ({
+    ...meetup,
+    id: meetup._id.toJSON()
+  }));
 
   client.close();
 
