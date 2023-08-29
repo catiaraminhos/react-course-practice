@@ -1,4 +1,5 @@
 import MeetupDetails from '@/components/meetups/MeetupDetails';
+import { getMeetupsIds } from '../api/meetups/meetups';
 
 const MEETUP = {
   title: 'A First Meetup',
@@ -6,6 +7,10 @@ const MEETUP = {
   address: 'Some address 5, 12345 Some City',
   description: 'This is a first meetup!'
 };
+
+export async function generateStaticParams() {
+  return getMeetupsIds();
+}
 
 const getMeetup = async (id) => {
   console.log('meetup id', id);
