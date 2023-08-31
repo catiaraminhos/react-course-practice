@@ -17,3 +17,12 @@ const MeetupDetailsPage = async ({ params }) => {
 };
 
 export default MeetupDetailsPage;
+
+export async function generateMetadata({ params }) {
+  const meetup = await getMeetupForId(params.meetupId);
+
+  return {
+    title: meetup.title,
+    description: meetup.description
+  };
+}
