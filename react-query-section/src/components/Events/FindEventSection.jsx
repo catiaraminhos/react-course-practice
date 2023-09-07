@@ -25,7 +25,7 @@ export default function FindEventSection() {
     setSearchTerm(searchElement.current.value);
   }
 
-  let content = <p>Please enter a search term and to find events.</p>;
+  let content = <p>Please enter a search term to find events.</p>;
 
   if (isPending) {
     content = <LoadingIndicator />;
